@@ -35,27 +35,34 @@ class NewsResult extends React.Component {
 
         let response = await fetch(`https://newsapi.org/v2/everything?q=${searchResult}&apiKey=4f5486283b504c40b246f2c481f0b95b`);
 
-        if (!response.ok) {
+        if (!response) {
+            // show loading text until fetch resolves
+            this.setState({loading:"Loading...", noResult: "", apiError: "", newsResults: [], search: "", })
       
-            const errorMessage = await response.json();      
-            // set error message from json
-            this.setState({apiError: errorMessage.message ? errorMessage.message : 'Error retrieving data, please contact the development team.', noResult: "", newsResults: [], search: "", loading:""}); 
-            
-        } else {    
+        } else {
+
+            if (!response.ok) {
         
-            const newsResults = await response.json();   
+                const errorMessage = await response.json();      
+                // set error message from json
+                this.setState({apiError: errorMessage.message ? errorMessage.message : 'Error retrieving data, please contact the development team.', noResult: "", newsResults: [], search: "", loading:""}); 
+                
+            } else {    
             
-            if (newsResults.totalResults === 0) {
-    
-                this.setState({noResult: "No result for this search, please try again", newsResults: [], search: "", apiError: "", loading:""}); 
-    
-            } else {        
-                //return top 10 results
-                const newsResultsTopTen = newsResults.articles.slice(0, 10);     
-    
-                this.setState({newsResults: newsResultsTopTen, noResult: "",  apiError: "",  search: "", loading: ""});               
+                const newsResults = await response.json();   
+                
+                if (newsResults.totalResults === 0) {
+        
+                    this.setState({noResult: "No result for this search, please try again", newsResults: [], search: "", apiError: "", loading:""}); 
+        
+                } else {        
+                    //return top 10 results
+                    const newsResultsTopTen = newsResults.articles.slice(0, 10);     
+        
+                    this.setState({newsResults: newsResultsTopTen, noResult: "",  apiError: "",  search: "", loading: ""});               
+                }
             }
-        }
+        }    
     }
 
     render() {
