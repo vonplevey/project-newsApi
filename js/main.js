@@ -3,17 +3,19 @@ const e = React.createElement;
 class NewsResult extends React.Component {
 
     constructor(props) {
-  
-      super(props);
-    
-      this.state = {             
-        search: "",
-        newsResults: [],    
-        noResult: "",
-        apiError: "", 
-        loading: "", 
-      };
-  
+
+        super(props);
+
+        this.state = {   
+
+            search: "",
+            newsResults: [],    
+            noResult: "",
+            apiError: "", 
+            loading: "", 
+
+        };
+
     }
 
     handleSearchChange(event) {    
@@ -25,8 +27,7 @@ class NewsResult extends React.Component {
 
         if (!this.state.search.length) {     
             
-            this.setState({noResult: "Please provide a search term", apiError: "", newsResults: [], search: "", loading: ""}) 
-
+            this.setState({noResult: "Please provide a search term", apiError: "", newsResults: [], search: "", loading: ""});
             return;
         }
 
@@ -34,7 +35,27 @@ class NewsResult extends React.Component {
 
         let response = await fetch(`https://newsapi.org/v2/everything?q=${searchResult}&apiKey=4f5486283b504c40b246f2c481f0b95b`);
 
-        console.log(response);
+        if (!response.ok) {
+      
+            const errorMessage = await response.json();      
+            // set error message from json
+            this.setState({apiError: errorMessage.message ? errorMessage.message : 'Error retrieving data, please contact the development team.', noResult: "", newsResults: [], search: "", loading:""}); 
+            
+        } else {    
+        
+            const newsResults = await response.json();   
+            
+            if (newsResults.totalResults === 0) {
+    
+                this.setState({noResult: "No result for this search, please try again", newsResults: [], search: "", apiError: "", loading:""}); 
+    
+            } else {        
+                //return top 10 results
+                const newsResultsTopTen = newsResults.articles.slice(0, 10);     
+    
+                this.setState({newsResults: newsResultsTopTen, noResult: "",  apiError: "",  search: "", loading: ""});               
+            }
+        }
     }
 
     render() {
