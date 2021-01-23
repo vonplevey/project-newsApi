@@ -69,6 +69,48 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+body {      
+  padding-top: 60px;
+  padding-bottom: 40px;
+  font-family: 'Calibri';
+  margin: 0;   
+}
+
+p, h1, h3, h4 a   {
+  font-family: 'Calibri';	  
+  color: #333333;
+} 
+
+.static-header, .static-footer {
+  width: 100%;
+  position: fixed;        
+  background: #5514b4;
+  padding: 10px 0;    
+}
+
+.static-header {
+  top: 0;
+}
+
+.static-footer {
+  bottom: 0;
+}
+
+#root {
+  width: 80%;  
+  margin-left: 50px;     
+}
+
+.bt-navbar-bt-logo {
+  height: 30px;
+  margin-left: 50px;
+  vertical-align: -10px;
+}
+
+
+
+
+
 
 /* ==========================================================================
    Helper classes
