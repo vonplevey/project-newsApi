@@ -9,6 +9,9 @@ class NewsResult extends React.Component {
       this.state = {             
         search: "",
         newsResults: [],    
+        noResult: "",
+        apiError: "", 
+        loading: "", 
       };
   
     }
@@ -20,7 +23,9 @@ class NewsResult extends React.Component {
 
     async searchNewsApi() {
 
-        if (!this.state.search.length) {            
+        if (!this.state.search.length) {     
+            
+            this.setState({noResult: "Please provide a search term", apiError: "", newsResults: [], search: "", loading: ""}) 
 
             return;
         }
@@ -34,7 +39,8 @@ class NewsResult extends React.Component {
 
     render() {
 
-        return e("h1", { key: "title" }, "BT React Code Test - by Chris Plevey - 22/01/21"),        
+        return e("div", null, [ 
+            e("h1", { key: "title" }, "BT React Code Test - by Chris Plevey - 22/01/21"),        
             e("div", {key: "inline-search", className: "inline-search"}, [
                 e("label",{ key: "inline-search-label", htmlFor:"article-search"}, "NewsApi Search:"),
                 e("input", {
@@ -50,7 +56,11 @@ class NewsResult extends React.Component {
                     { key: "search-btn", onClick: () => this.searchNewsApi() },
                     "Search"
                 ),
-            ]);        
+            ]),
+             e("h3", { key: "no-result" }, this.state.noResult),
+             e("h3", { key: "api-error"}, this.state.apiError),
+             e("h3", { key: "loading"}, this.state.loading)
+        ]);
       }
     }  
     
