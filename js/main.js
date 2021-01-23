@@ -20,7 +20,7 @@ class NewsResult extends React.Component {
 
     handleSearchChange(event) {    
                 
-        this.setState({search : event.target.value});  
+        this.setState({search: event.target.value});  
     }
 
     async searchNewsApi() {
@@ -62,7 +62,8 @@ class NewsResult extends React.Component {
 
         return e("div", null, [ 
             e("h1", { key: "title" }, "BT React Code Test - by Chris Plevey - 22/01/21"),        
-            e("div", {key: "inline-search", className: "inline-search"}, [
+            
+            e("div", { key: "inline-search", className: "inline-search" }, [
                 e("label",{ key: "inline-search-label", htmlFor:"article-search"}, "NewsApi Search:"),
                 e("input", {
                     key: "input",
@@ -78,9 +79,20 @@ class NewsResult extends React.Component {
                     "Search"
                 ),
             ]),
-             e("h3", { key: "no-result" }, this.state.noResult),
-             e("h3", { key: "api-error"}, this.state.apiError),
-             e("h3", { key: "loading"}, this.state.loading)
+           
+            e("ul", { key:"articles" }, 
+            this.state.newsResults.map((item, index) => 
+              e("li",  {
+                key: index, className: "api-articles"
+              }, e("div", null, item.title  ? `Title: ${item.title}` : "N/A"),
+                 e("div", null, item.author ? `Author: ${item.author}` : "N/A"),                              
+                 e("div", null, item.description ? `Description: ${item.description.slice(0, 150)}` : "N/A"), 
+                 e("a", item.url ? { href: item.url, target: "_blank", rel :"noopener noreferrer" } : null,  item.url ? "Read more" : "N/A")
+            ))),
+            
+            e("h3", { key: "no-result" }, this.state.noResult),
+            e("h3", { key: "api-error"}, this.state.apiError),
+            e("h3", { key: "loading"}, this.state.loading)
         ]);
       }
     }  
