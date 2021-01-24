@@ -77,9 +77,18 @@ body {
   color: #333333; 
 }
 
-p, h1, h3, h4 a   {
+p, h1, h3, h4, a   {
   font-family: 'Calibri';	  
   color: #333333;
+} 
+
+ a, a:hover, a:visited, a:active  {
+    color: #5514b4
+}
+
+ ul {
+    list-style-type: none;
+    padding-left: 0rem;
 } 
 
 .static-header, .static-footer {
@@ -100,6 +109,10 @@ p, h1, h3, h4 a   {
 #root {
   width: 80%;  
   margin-left: 50px;     
+}
+
+.api-articles {
+  margin-top: 20px;
 }
 
 .bt-navbar-bt-logo {
