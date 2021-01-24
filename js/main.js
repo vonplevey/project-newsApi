@@ -37,7 +37,7 @@ class NewsResult extends React.Component {
 
         if (!response) {
             // show loading text until fetch resolves
-            this.setState({loading:"Loading...", noResult: "", apiError: "", newsResults: [], search: "", })
+            this.setState({loading:"Loading...", noResult: "", apiError: "", newsResults: [], search: "", });
       
         } else {
 
